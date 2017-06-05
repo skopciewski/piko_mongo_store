@@ -1,0 +1,21 @@
+sudo: required
+
+services:
+  - docker
+  - mongodb
+
+before_install:
+  - git checkout -qf $TRAVIS_BRANCH
+install:
+  - docker build -t thegem .
+
+script:
+  - docker run -it --rm --net=host -v $TRAVIS_BUILD_DIR:/opt/project/code thegem bundle exec rake
+  - docker run -it --rm -e CODECLIMATE_REPO_TOKEN=$CC -v $TRAVIS_BUILD_DIR:/opt/project/code thegem bundle exec codeclimate-test-reporter
+
+deploy:
+  provider: rubygems
+  api_key: "$RG"
+  on:
+    branch: master
+    tags: true
