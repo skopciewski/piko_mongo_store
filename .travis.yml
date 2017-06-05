@@ -6,6 +6,7 @@ services:
 
 before_install:
   - git checkout -qf $TRAVIS_BRANCH
+  - sed -i -e "s/mongo:2/localhost:2/" $TRAVIS_BUILD_DIR/test/support/test_mongo_config.yml
 install:
   - docker build -t thegem .
 
