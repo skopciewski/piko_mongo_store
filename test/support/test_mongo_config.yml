@@ -1,0 +1,4 @@
+---
+:hosts:
+  - "mongo:27017"
+:database: "test"
